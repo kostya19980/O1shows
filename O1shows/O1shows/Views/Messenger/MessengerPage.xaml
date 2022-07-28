@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="O1shows.Views.Messenger.MessengerPage"
+             BackgroundColor="{StaticResource color-bg}"
+             xmlns:views="clr-namespace:O1shows.Views.Messenger"
+             BarBackgroundColor="{StaticResource color-bg-surface}"
+             BarTextColor="{StaticResource color-text-heading}">
+    <TabbedPage.Children>
+        <views:ChatsView Title="Чаты"/>
+        <views:FriendsView Title="Друзья"/>
+        <!--<Grid VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
+                <StackLayout Margin="8">
+                    <Frame BackgroundColor="{StaticResource color-bg-surface}" CornerRadius="8" Padding="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                            </Grid.RowDefinitions>
+                            <elements:SearchEntry 
+                                x:Name="search"
+                                TextChanged="OnTextChanged"
+                                TextColor="WhiteSmoke"
+                                PlaceholderColor="#98989D" 
+                                Placeholder="Поиск по сериалам"
+                                FontSize="14">
+                            </elements:SearchEntry>
+                            <StackLayout 
+                                Orientation="Horizontal"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center" 
+                                Margin="0,0,10,0" >
+                                <ImageButton 
+                                    x:Name="clearSearchButton" 
+                                    Clicked="ClearSearchEntry" 
+                                    Source="x.svg"  
+                                    BackgroundColor="Transparent"
+                                    IsVisible="false">
+                                </ImageButton>
+                                <ImageButton
+                                    Clicked="FilterSeries" 
+                                    Source="setting_config.svg"  
+                                    BackgroundColor="Transparent">
+                                </ImageButton>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+            <Button Text="Tab1"
+                Grid.Row="0"
+                Grid.Column="0"
+                Command="{Binding SelectItemCommand}"
+                CommandParameter="0">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                      Binding="{Binding PositionSelected}"
+                                      Value="0">
+                        <Setter Property="Style" Value="{StaticResource ButtonStyle}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <Button Text="Tab2"
+                Grid.Row="0"
+                Grid.Column="1"
+                Command="{Binding SelectItemCommand}"
+                CommandParameter="1">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                      Binding="{Binding PositionSelected}"
+                                      Value="1">
+                        <Setter Property="Style" Value="{StaticResource ButtonStyle}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <CarouselView Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="1"
+                     ItemTemplate="{StaticResource CarouselDataTemplateSelector}"
+                     IsSwipeEnabled="False"
+                     IsScrollAnimated="False"
+                     Position="{Binding PositionSelected}">
+                <CarouselView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>1</x:String>
+                        <x:String>2</x:String>
+                    </x:Array>
+                </CarouselView.ItemsSource>
+            </CarouselView>
+            <bottomSheet:BottomSheetControl 
+                    x:Name="Sheet"
+                    SheetHeight="550">
+                <bottomSheet:BottomSheetControl.SheetContent>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label 
+                                Text="Фильтры" 
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource color-text-heading}"
+                                VerticalOptions="Center"/>
+                            <Button 
+                                Text="Сбросить"
+                                HeightRequest="40"
+                                HorizontalOptions="EndAndExpand"
+                                TextTransform="None"
+                                TextColor="{StaticResource color-accent-purple}"
+                                BackgroundColor="{StaticResource color-bg-surface}"
+                                CornerRadius="8">
+                            </Button>
+                        </StackLayout>
+                        <ScrollView Margin="0,0,0,0">
+                            <StackLayout x:Name="filtersBlock">
+                            </StackLayout>
+                        </ScrollView>
+                        <Label 
+                            Text="Сортировка" 
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource color-text-heading}"
+                            Margin="0,8,0,0"/>
+                        <Button 
+                            VerticalOptions="EndAndExpand"
+                            Text="Применить" 
+                            CornerRadius="8" 
+                            Margin="0,0,0,16" 
+                            Padding="16,12,16,12"
+                            TextTransform="None"
+                            BackgroundColor="{StaticResource color-accent-purple}"
+                            TextColor="#FFFFFF"
+                            FontSize="14"
+                            FontAttributes="Bold"></Button>
+                    </StackLayout>
+                </bottomSheet:BottomSheetControl.SheetContent>
+            </bottomSheet:BottomSheetControl>
+        </Grid>-->
+    </TabbedPage.Children>
+</TabbedPage>

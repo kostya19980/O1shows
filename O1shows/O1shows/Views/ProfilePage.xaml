@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="O1shows.Views.ProfilePage"
+             xmlns:local="clr-namespace:O1shows.ViewModels"  
+             xmlns:elements="clr-namespace:O1shows.Elements"
+             BackgroundColor="{StaticResource color-bg}"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:views="clr-namespace:O1shows.Views"
+             xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.Content>
+        <RefreshView x:DataType="local:UserProfileViewModel" Command="{Binding GetUserProfileCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <StackLayout Padding="8" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                <Frame CornerRadius="8" BackgroundColor="{StaticResource color-bg-surface}">
+                    <FlexLayout Direction="Column" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                        <StackLayout Orientation="Horizontal">
+                            <ff:CachedImage HorizontalOptions="Start"
+                                Source="{Binding ImageSrc}" 
+                                DownsampleToViewSize="true"
+                                WidthRequest="80"
+                                HeightRequest="80"
+                                Aspect="AspectFit">
+                                <ff:CachedImage.Transformations>
+                                    <ffTransformations:CircleTransformation />
+                                </ff:CachedImage.Transformations>
+                            </ff:CachedImage>
+                            <StackLayout Orientation="Vertical" Margin="12,0,0,0">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label 
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding UserName}" 
+                                    TextColor="{StaticResource color-text-heading}" 
+                                    FontSize="24" 
+                                    FontAttributes="Bold" 
+                                    FontFamily="Inter"></Label>
+                                    <Label
+                                    VerticalTextAlignment="Center"
+                                    Text="+11 777" 
+                                    TextColor="{StaticResource color-status-success}" 
+                                    Margin="12,0,0,0"
+                                    FontSize="16" 
+                                    FontAttributes="Bold" 
+                                    FontFamily="Inter"></Label>
+                                </StackLayout>
+                                <Button 
+                                    Command="{Binding FriendButtonCommand}"
+                                    CommandParameter="{Binding Id}"
+                                    ImageSource="{Binding AddFriendButton.Icon}"
+                                    IsVisible="{Binding AddFriendButton.IsVisible}" 
+                                    Text="{Binding AddFriendButton.Text}" 
+                                    TextTransform="None"
+                                    Font="14"
+                                    CornerRadius="4"
+                                    HeightRequest="40"
+                                    WidthRequest="32"
+                                    TextColor="{StaticResource color-text-heading}"
+                                    BackgroundColor="{Binding AddFriendButton.BackgroundColor}"></Button>
+                            </StackLayout>
+                        </StackLayout>
+                        <Line BackgroundColor="{StaticResource color-separator-surface}" HeightRequest="1" Margin="0,12,0,0"></Line>
+                        <ScrollView Orientation="Horizontal" Margin="0,12,0,0" HorizontalScrollBarVisibility="Never">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Start">
+                                    <Label 
+                                            Text="{Binding ProfileStats.EpisodesCount, StringFormat='{0:### ### ###}'}" 
+                                            TextColor="{StaticResource color-text-heading}" 
+                                            FontSize="22" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                    <Label
+                                            TextColor="{StaticResource color-text-secondary}" 
+                                            LineHeight="12"
+                                            FontSize="12" 
+                                            Margin="0,8,0,0"
+                                            FontFamily="Inter">Просмотрено эпизодов</Label>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" Margin="24,0,0,0">
+                                    <Label 
+                                            Text="{Binding ProfileStats.SeriesCount, StringFormat='{0:### ### ###}'}" 
+                                            TextColor="{StaticResource color-text-heading}" 
+                                            FontSize="22" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                    <Label
+                                            TextColor="{StaticResource color-text-secondary}" 
+                                            LineHeight="12"
+                                            FontSize="12" 
+                                            Margin="0,8,0,0"
+                                            FontFamily="Inter">Просмотрено сериалов</Label>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" Margin="24,0,0,0">
+                                    <Label 
+                                            Text="{Binding ProfileStats.HoursSpent, StringFormat='{0:### ### ###}'}" 
+                                            TextColor="{StaticResource color-text-heading}" 
+                                            FontSize="22" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                    <Label
+                                            TextColor="{StaticResource color-text-secondary}" 
+                                            LineHeight="12"
+                                            FontSize="12" 
+                                            Margin="0,8,0,0"
+                                            FontFamily="Inter">Потрачено часов</Label>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" Margin="24,0,0,0">
+                                    <Label 
+                                            Text="{Binding ProfileStats.DaysSpent, StringFormat='{0:### ### ###}'}" 
+                                            TextColor="{StaticResource color-text-heading}" 
+                                            FontSize="22" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                    <Label
+                                            TextColor="{StaticResource color-text-secondary}" 
+                                            LineHeight="12"
+                                            FontSize="12" 
+                                            Margin="0,8,0,0"
+                                            FontFamily="Inter">Потрачено дней</Label>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" Margin="24,0,0,0">
+                                    <Label 
+                                            Text="{Binding ProfileStats.AchievementsCount}" 
+                                            TextColor="{StaticResource color-text-heading}" 
+                                            FontSize="22" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                    <Label
+                                            TextColor="{StaticResource color-text-secondary}" 
+                                            LineHeight="12"
+                                            FontSize="12" 
+                                            Margin="0,8,0,0"
+                                            FontFamily="Inter">Получено достижений</Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </ScrollView>
+                    </FlexLayout>
+                </Frame>
+                <ScrollView Orientation="Horizontal" Margin="0,12,0,0" Padding="0,0,8,0" HorizontalScrollBarVisibility="Never">
+                    <StackLayout BindableLayout.ItemsSource="{Binding StatusTabs}" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:WatchStatusTab">
+                                <StackLayout Margin="6,0,0,0" Orientation="Horizontal">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:UserProfileViewModel}}, Path=ToogleStatusTab}"
+                                                CommandParameter="{Binding .}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <StackLayout VerticalOptions="Start">
+                                        <Label
+                                            VerticalTextAlignment="Center"
+                                            Text="{Binding WatchStatus.StatusName}" 
+                                            TextColor="{Binding TextColor}" 
+                                            FontSize="16" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                        <Line HeightRequest="2" BackgroundColor="{Binding LineColor}">
+                                        </Line>
+                                    </StackLayout>
+                                    <Label
+                                            VerticalOptions="Start"
+                                            VerticalTextAlignment="Center"
+                                            Text="{Binding SeriesList.Count}" 
+                                            TextColor="{StaticResource color-text-secondary}" 
+                                            FontSize="16" 
+                                            LineHeight="22"
+                                            FontFamily="Inter"></Label>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+                <ScrollView Orientation="Vertical" Scrolled="OnScrolledSeriesList">
+                    <FlexLayout BindableLayout.ItemsSource="{Binding CurrentStatusTab.LoadedSeriesList}" Wrap="Wrap" Padding="-8,4,0,12">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:ProfileSeriesItem">
+                                <StackLayout Margin="8,8,0,0" WidthRequest="{Binding SeriesBlockWidth}" 
+                                             behaviors:TouchEffect.PressedScale="0.95" behaviors:TouchEffect.PressedOpacity="0.7">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:UserProfileViewModel}}, Path=SelectSeriesCommand}"
+                                                CommandParameter="{Binding Id}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Frame CornerRadius="8" BackgroundColor="{StaticResource color-bg-surface}" HeightRequest="260" Padding="12,12,12,20">
+                                        <StackLayout>
+                                            <views:SquarePage>
+                                                <Grid>
+                                                    <Frame Grid.Row="0" Grid.Column="0"  CornerRadius="4" Padding="0">
+                                                        <ff:CachedImage
+                                                            Source="{Binding PicturePath}" 
+                                                            DownsampleToViewSize="true"
+                                                            Aspect="AspectFill">
+                                                        </ff:CachedImage>
+                                                    </Frame>
+                                                    <Frame 
+                                                        Grid.Row="0" 
+                                                        Grid.Column="0" 
+                                                        Padding="2,0,2,0" 
+                                                        BackgroundColor="{Binding Status.StatusColorName}" 
+                                                        WidthRequest="42" 
+                                                        HorizontalOptions="Start" 
+                                                        VerticalOptions="Start"
+                                                        Margin="4,4,0,0"
+                                                        CornerRadius="10">
+                                                        <Label 
+                                                            Text="{Binding Status.Name}" 
+                                                            TextTransform="Uppercase" 
+                                                            HorizontalTextAlignment="Center" 
+                                                            VerticalTextAlignment="Center"
+                                                            TextColor="{StaticResource color-text-heading}"
+                                                            FontSize="10" LineHeight="10"></Label>
+                                                    </Frame>
+                                                </Grid>
+                                            </views:SquarePage>
+                                            <StackLayout Margin="0,2,0,0">
+                                                <Label 
+                                                    Text="{Binding Title}"
+                                                    FontSize="13"
+                                                    FontFamily="Inter"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{StaticResource color-text-heading}"></Label>
+                                                <Label 
+                                                    Text="{Binding OriginalTitle}"
+                                                    FontSize="11"
+                                                    FontFamily="Inter"
+                                                    TextColor="{StaticResource color-text-secondary}"
+                                                    Margin="0,-2,0,0"></Label>
+                                            </StackLayout>
+                                            <StackLayout VerticalOptions="EndAndExpand">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Image Source="star.xml" HeightRequest="16" WidthRequest="16" HorizontalOptions="Start"></Image>
+                                                    <Label 
+                                                    Text="{Binding UserRaiting}"
+                                                    FontSize="14"
+                                                    FontFamily="Inter"
+                                                    TextColor="{StaticResource color-text-heading}"></Label>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <elements:WatchProgressBar Progress="{Binding Progress}" HorizontalOptions="FillAndExpand" ScaleY="0.5"></elements:WatchProgressBar>
+                                                    <Label
+                                                        FontSize="11"
+                                                        FontFamily="Inter"
+                                                        TextColor="{StaticResource color-text-secondary}">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding UserEpisodes.Count}"/>
+                                                                <Span Text="/"/>
+                                                                <Span Text="{Binding EpisodesCount}"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </ScrollView>
+            </StackLayout>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

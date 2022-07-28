@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="O1shows.Views.Messenger.FriendsView"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:local="clr-namespace:O1shows.ViewModels"
+             xmlns:models="clr-namespace:O1shows.Models"
+              BackgroundColor="{StaticResource color-bg}">
+    <ContentPage.Content>
+        <RefreshView x:DataType="local:FriendsViewModel" Command="{Binding GetFriendsListCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Margin="0,12,0,0">
+            <ScrollView Orientation="Vertical" Padding="8,-8,8,8">
+                <StackLayout BindableLayout.ItemsSource="{Binding Friends}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate  x:DataType="models:UserProfile">
+                            <Frame Padding="12,4,16,4" CornerRadius="2" BackgroundColor="{StaticResource color-bg-surface}">
+                                <StackLayout Orientation="Horizontal">
+                                    <ff:CachedImage HorizontalOptions="Start"
+                                                            Source="{Binding ImageSrc}" 
+                                                            DownsampleToViewSize="true"
+                                                            WidthRequest="80"
+                                                            HeightRequest="80"
+                                                            Aspect="AspectFit">
+                                        <ff:CachedImage.Transformations>
+                                            <ffTransformations:CircleTransformation />
+                                        </ff:CachedImage.Transformations>
+                                        <!--<ff:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:EpisodeViewModel}}, Path=SelectUserProfileCommand}"
+                                                CommandParameter="{Binding UserProfileId}"/>
+                                        </ff:CachedImage.GestureRecognizers>-->
+                                    </ff:CachedImage>
+                                    <StackLayout Orientation="Vertical" Margin="8,0,0,0" HeightRequest="100" Padding="8">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label 
+                                                        VerticalOptions="Center"
+                                                        Text="{Binding User.UserName}"
+                                                        TextColor="{StaticResource color-accent-purple}"
+                                                        FontSize="16"
+                                                FontAttributes="Bold"></Label>
+                                        </StackLayout>
+                                        <Button Text="Написать сообщение" CornerRadius="8" TextTransform="None" VerticalOptions="EndAndExpand" BackgroundColor="{StaticResource color-accent-purple}">
+                                            
+                                        </Button>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

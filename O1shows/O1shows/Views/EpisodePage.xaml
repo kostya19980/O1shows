@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:O1shows.ViewModels"
+             xmlns:models="clr-namespace:O1shows.Models"
+             xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             x:Class="O1shows.Views.EpisodePage"
+             BackgroundColor="Transparent"
+             xmlns:elements="clr-namespace:O1shows.Elements">
+    <ContentPage.Content>
+        <Grid x:Name="pageContent" x:DataType="local:EpisodeViewModel" BackgroundColor="{StaticResource color-bg}" RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout Opacity="0.6">
+                <ff:CachedImage
+                    x:Name="seriesCover"
+                    Source="{Binding Episode.PicturePath}" 
+                    Aspect="AspectFill"
+                    HeightRequest="220"
+                    DownsampleToViewSize="False">
+                </ff:CachedImage>
+            </StackLayout>
+            <StackLayout Spacing="0">
+                <Grid HeightRequest="220" ColumnSpacing="0" RowSpacing="0" Padding="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="220"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.GestureRecognizers>
+                        <PanGestureRecognizer PanUpdated="ClosingPage"/>
+                    </Grid.GestureRecognizers>
+                    <StackLayout VerticalOptions="Start" Orientation="Horizontal" Spacing="0" Padding="12,36,12,0">
+                        <ImageButton 
+                            Source="swipe_down_arrow.xml" 
+                            WidthRequest="32" 
+                            HeightRequest="32" 
+                            Padding="4" CornerRadius="16"
+                            BackgroundColor="Transparent" 
+                            Clicked="ClosePage_Clicked"
+                            behaviors:TouchEffect.PressedBackgroundColor="Black" behaviors:TouchEffect.PressedOpacity="0.5"></ImageButton>
+                        <ImageButton 
+                            Source="more.xml" 
+                            HorizontalOptions="EndAndExpand" 
+                            WidthRequest="32" 
+                            HeightRequest="32" 
+                            Padding="4" CornerRadius="16"
+                            BackgroundColor="Transparent"
+                            behaviors:TouchEffect.PressedBackgroundColor="Black" behaviors:TouchEffect.PressedOpacity="0.5"></ImageButton>
+                    </StackLayout>
+                    <Image Source="bottom_shadow.png" VerticalOptions="EndAndExpand" ></Image>
+                    <Grid x:Name="titleBlock" VerticalOptions="EndAndExpand" Padding="12,0,12,12" RowSpacing="0" ColumnSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0" Spacing="0">
+                            <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="StartAndExpand">
+                                <ScrollView x:Name="titleScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                                    <Label x:Name="seriesTitle"
+                                           TextColor="{StaticResource color-text-heading}"
+                                           FontSize="20"
+                                           FontFamily="Inter"
+                                           FontAttributes="Bold">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Episode.SeasonNumber, StringFormat='S{0:00}'}" />
+                                                <Span Text="{Binding Episode.EpisodeNumber, StringFormat=' | E{0:00}'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </ScrollView>
+                            </StackLayout>
+                            <Label
+                                Text="{Binding Episode.Title}"
+                                TextColor="{StaticResource color-text-secondary}"
+                                FontSize="13"
+                                FontFamily="Inter">
+                            </Label>
+                        </StackLayout>
+                        <!--<Grid Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" ColumnSpacing="0" RowSpacing="0" Margin="8,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="48"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <ImageButton Source="{Binding CurrentWatchStatusButton.Icon}" HeightRequest="26" WidthRequest="26" HorizontalOptions="Center" VerticalOptions="StartAndExpand" BackgroundColor="Transparent"></ImageButton>
+                            <Label x:Name="WatchStatusLabel" FontSize="12" TextColor="{StaticResource color-text-heading}" HorizontalOptions="Center" VerticalOptions="End" Text="{Binding CurrentWatchStatusButton.Status}"></Label>
+                        </Grid>-->
+                    </Grid>
+                </Grid>
+                <ScrollView VerticalOptions="FillAndExpand">
+                    <StackLayout Padding="12" VerticalOptions="FillAndExpand">
+                        <Label 
+                            FontSize="16">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span TextColor="{StaticResource color-text-heading}" Text="Комментарии" FontAttributes="Bold"/>
+                                    <Span Text="/"/>
+                                    <Span Text="{Binding Episode.Comments.Count}" TextColor="{StaticResource color-text-secondary}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <StackLayout BindableLayout.ItemsSource="{Binding Episode.Comments}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate  x:DataType="models:Comment">
+                                    <Frame Padding="12,4,16,4" CornerRadius="2" BackgroundColor="{StaticResource color-bg-surface}">
+                                        <StackLayout Orientation="Horizontal">
+                                            <ff:CachedImage HorizontalOptions="Start"
+                                                            Source="{Binding UserProfile.ImageSrc}" 
+                                                            DownsampleToViewSize="true"
+                                                            WidthRequest="80"
+                                                            HeightRequest="80"
+                                                            Aspect="AspectFit">
+                                                <ff:CachedImage.Transformations>
+                                                    <ffTransformations:CircleTransformation />
+                                                </ff:CachedImage.Transformations>
+                                                <ff:CachedImage.GestureRecognizers>
+                                                    <TapGestureRecognizer 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:EpisodeViewModel}}, Path=SelectUserProfileCommand}"
+                                                CommandParameter="{Binding UserProfileId}"/>
+                                                </ff:CachedImage.GestureRecognizers>
+                                            </ff:CachedImage>
+                                            <StackLayout Orientation="Vertical" Margin="8,0,0,0">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label 
+                                                        VerticalOptions="Center"
+                                                        Text="{Binding UserProfile.User.UserName}"
+                                                        TextColor="{StaticResource color-accent-purple}"
+                                                        FontSize="14"></Label>
+                                                    <Label
+                                                        VerticalOptions="Center"
+                                                        Text="{Binding Date}"
+                                                        TextColor="{StaticResource color-text-secondary}"
+                                                        FontSize="12"
+                                                        Margin="4,0,0,0"></Label>
+                                                </StackLayout>
+                                                <Label 
+                                                Text="{Binding Text}"
+                                                FontSize="14"
+                                                TextColor="{StaticResource color-text-heading}"></Label>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <StackLayout x:Name="SendMessage" VerticalOptions="End">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <elements:SearchEntry 
+                                x:Name="CommentEntry"
+                                TextChanged="OnTextChanged"
+                                TextColor="WhiteSmoke"
+                                PlaceholderColor="#98989D" 
+                                Placeholder="Комментарий"
+                                FontSize="14">
+                    </elements:SearchEntry>
+                    <StackLayout 
+                                Orientation="Horizontal"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center" 
+                                Margin="0,0,10,0" >
+                        <ImageButton 
+                                    x:Name="clearSearchButton" 
+                                    Clicked="ClearSearchEntry" 
+                                    Source="x.svg"  
+                                    BackgroundColor="Transparent"
+                                    IsVisible="false">
+                        </ImageButton>
+                        <ImageButton
+                            Clicked="SendComment_Clicked"
+                                    Source="send.svg"  
+                                    BackgroundColor="Transparent">
+                        </ImageButton>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

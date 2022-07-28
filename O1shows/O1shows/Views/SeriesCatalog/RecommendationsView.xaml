@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="O1shows.Views.SeriesCatalog.RecommendationsView"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:views="clr-namespace:O1shows.Views"
+             xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:local="clr-namespace:O1shows.ViewModels"
+             BackgroundColor="{StaticResource color-bg}">
+    <ContentPage.Content>
+        <RefreshView x:DataType="local:SeriesCatalogViewModel" Command="{Binding GetRecommendationsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Margin="0,12,0,0">
+            <ScrollView Orientation="Vertical" Scrolled="OnScrolledSeriesList" Padding="8,-8,8,8">
+                <FlexLayout BindableLayout.ItemsSource="{Binding LoadedSeriesList}" Wrap="Wrap" Padding="-8,0,0,12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:SeriesCatalogItem">
+                            <StackLayout Margin="8,8,0,0" WidthRequest="{Binding SeriesBlockWidth}" behaviors:TouchEffect.PressedScale="0.95" behaviors:TouchEffect.PressedOpacity="0.7">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:SeriesCatalogViewModel}}, Path=SelectSeriesCommand}"
+                                                CommandParameter="{Binding SeriesId}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Frame CornerRadius="8" BackgroundColor="{StaticResource color-bg-surface}" HeightRequest="220" Padding="12,12,12,20">
+                                    <StackLayout>
+                                        <views:SquarePage>
+                                            <Grid>
+                                                <Frame Grid.Row="0" Grid.Column="0"  CornerRadius="4" Padding="0">
+                                                    <ff:CachedImage
+                                                            Source="{Binding PicturePath}" 
+                                                            DownsampleToViewSize="true"
+                                                            Aspect="AspectFill">
+                                                    </ff:CachedImage>
+                                                </Frame>
+                                                <Grid
+                                                    Grid.Row="0" 
+                                                    Grid.Column="0" 
+                                                    HorizontalOptions="Start" 
+                                                    VerticalOptions="Start"
+                                                    Margin="4,4,0,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="20"></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="40"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Frame 
+                                                        CornerRadius="8"
+                                                        BackgroundColor="Black"
+                                                        Opacity="0.75">
+                                                    </Frame>
+                                                    <Label
+                                                            Text="{Binding PotentialRating,StringFormat='{0} %'}"  
+                                                            HorizontalTextAlignment="Center" 
+                                                            VerticalTextAlignment="Center"
+                                                            TextColor="{StaticResource color-text-heading}"
+                                                            FontSize="11" LineHeight="10"></Label>
+                                                </Grid>
+                                                <Frame 
+                                                            Grid.Row="0" 
+                                                            Grid.Column="0" 
+                                                            Padding="6,2,6,2" 
+                                                            BackgroundColor="{Binding SeriesRaiting.Color}" 
+                                                            WidthRequest="20" 
+                                                            HorizontalOptions="Start" 
+                                                            VerticalOptions="End"
+                                                            Margin="4,0,0,4"
+                                                            CornerRadius="2">
+                                                    <Label 
+                                                                Text="{Binding SeriesRaiting.Value}" 
+                                                                TextTransform="Uppercase" 
+                                                                HorizontalTextAlignment="Center" 
+                                                                VerticalTextAlignment="Center"
+                                                                TextColor="{StaticResource color-text-heading}"
+                                                                FontSize="10" LineHeight="10" FontAttributes="Bold"></Label>
+                                                </Frame>
+                                            </Grid>
+                                        </views:SquarePage>
+                                        <StackLayout Margin="0,2,0,0">
+                                            <Label 
+                                                    Text="{Binding Title}"
+                                                    FontSize="13"
+                                                    FontFamily="Inter"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{StaticResource color-text-heading}"></Label>
+                                            <Label 
+                                                    Text="{Binding OriginalTitle}"
+                                                    FontSize="11"
+                                                    FontFamily="Inter"
+                                                    TextColor="{StaticResource color-text-secondary}"
+                                                    Margin="0,-2,0,0"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>
+    
